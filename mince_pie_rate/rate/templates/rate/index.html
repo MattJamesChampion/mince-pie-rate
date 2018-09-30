@@ -7,4 +7,12 @@
 {% block content %}
     <h1>Mince Pie-Rate</h1>
     <p>Welcome! This is a website for you to rate mince pies.</p>
+	<h2>
+		Mince Pies
+	</h2>
+	<ul>
+	{% for mince_pie in mince_pie_list %}
+		<li>{{mince_pie}}</li>
+	{% endfor %}
+	</ul>
 {% endblock content %}
