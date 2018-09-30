@@ -7,8 +7,8 @@
 	<body>
 		<nav class="menu">
 		  <ul>
-			<li><a href="{% url 'index'%}">Home</a></li>
-			<li><a href="{% url 'review'%}">Review</a></li>
+			<li><a href="{% url 'rate:index'%}">Home</a></li>
+			<li><a href="{% url 'rate:review'%}">Review</a></li>
 		  </ul>
 		</nav>
 		{% block content %}{% endblock content %}
