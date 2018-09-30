@@ -5,6 +5,12 @@
 		<title>{% block title %}{% endblock title %}</title>
 	</head>
 	<body>
+		<nav class="menu">
+		  <ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/review/">Review</a></li>
+		  </ul>
+		</nav>
 		{% block content %}{% endblock content %}
 	</body>
 </html>
