@@ -6,4 +6,4 @@ def index(request):
     return render(request, 'rate/index.html')
 
 def review(request):
-    return HttpResponse('Review a mince-pie.')
+    return render(request, 'rate/review.html')
