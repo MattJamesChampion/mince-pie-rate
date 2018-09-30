@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import MincePie, Review
+
+
+admin.site.register(MincePie)
+admin.site.register(Review)
