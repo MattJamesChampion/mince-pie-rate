@@ -7,4 +7,22 @@
 {% block content %}
     <h1>{{mince_pie}}</h1>
     <p>You are currently viewing "{{mince_pie}}".</p>
+
+    <section>
+        <form action="{% url 'rate:review' mince_pie.pk %}" method="post">
+            <fieldset>
+                <legend>Review {{mince_pie}}</legend>
+                {% csrf_token %}
+                <label for="numeric_rating">Numeric Rating:</label>
+                <input type="number" name="numeric_rating" />
+                <br/>
+                <label for="free_text_review">Free Text Review:</label>
+                <input type="text" name="free_text_review" />
+                <br/>
+                {% if notification_message %}<p><strong>{{ notification_message }}</strong></p>{% endif %}
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <input type="submit" value="Submit review" />
+            </fieldset>
+        </form>
+    </section>
 {% endblock content %}
