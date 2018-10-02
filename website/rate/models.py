@@ -14,12 +14,6 @@ class MincePie(models.Model):
     def __str__(self):
         return "{0} - {1}".format(self.brand, self.name)
 
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:
-            obj.created_by = request.user
-        obj.updated_by = request.user
-        super().save_model(request, obj, form, change)
-
 class Review(models.Model):
     created_by = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL, related_name='review_created_by')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -30,9 +24,3 @@ class Review(models.Model):
 
     def __str__(self):
         return "{0}: {1}".format(str(self.mince_pie), self.rating)
-
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:
-            obj.created_by = request.user
-        obj.updated_by = request.user
-        super().save_model(request, obj, form, change)
