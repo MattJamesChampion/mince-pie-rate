@@ -12,7 +12,7 @@
     </h2>
     <ul>
     {% for mince_pie in mince_pie_list %}
-        <li>{{mince_pie}}</li>
+        <li><a href="{% url 'rate:detail' mince_pie.id %}">{{mince_pie}}</a></li>
     {% endfor %}
     </ul>
 {% endblock content %}
