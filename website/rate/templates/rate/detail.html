@@ -24,4 +24,25 @@
             </fieldset>
         </form>
     </section>
+    <section>
+        <h1>Reviews so far:</h1>
+        {% if mince_pie.review_set.all %}
+            <table>
+                <tr>
+                    <th>Created By</th>
+                    <th>Date Created</th>
+                    <th>Rating</th>
+                </tr>
+                {% for review in mince_pie.review_set.all %}
+                <tr>
+                    <td>{{review.created_by}}</td>
+                    <td>{{review.created_at}}</td>
+                    <td>{{review.rating}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No reviews complete for these mince pies yet!</p>
+        {% endif %}
+    </section>
 {% endblock content %}
