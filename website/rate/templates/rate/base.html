@@ -14,6 +14,7 @@
             <nav id="page-navigation">
                 <a href="{% url 'rate:index'%}" {% if active_page == "index" %} class="active" {% endif %}>Home</a>
                 <a href="{% url 'rate:overview'%}" {% if active_page == "overview" %} class="active" {% endif %}>Overview</a>
+                <a href="{% url 'rate:add'%}" {% if active_page == "add" %} class="active" {% endif %}>Add</a>
             </nav>
         </header>
         {% block content %}{% endblock content %}
