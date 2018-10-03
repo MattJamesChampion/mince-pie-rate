@@ -68,6 +68,24 @@ th, td {
     padding: 3px;
 }
 
+.mince_pie_card {
+    float: left;
+    border: 1px black solid;
+    padding: 5px;
+    margin: 3px;
+    width: 30%;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.mince_pie_card:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
 @media screen and (max-width: 600px) {
     body {
         width: 95%;
@@ -86,4 +104,15 @@ th, td {
         margin-left: auto;
         margin-right: auto;
     }
-  }
+    .mince_pie_cards {
+        float:none;
+        display:inline-block;
+        display: block;
+        text-align: center;
+    }
+    .mince_pie_card {
+        width: 90%;
+        float: none;
+        display:inline-block;
+    }
+}
