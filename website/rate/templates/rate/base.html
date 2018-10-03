@@ -11,8 +11,8 @@
         <header id="main-header">
             <a href="{% url 'rate:index'%}" id="page-header">Mince Pie-Rate</a>
             <nav id="page-navigation">
-                <a href="{% url 'rate:index'%}">Home</a>
-                <a href="{% url 'rate:overview'%}">Overview</a>
+                <a href="{% url 'rate:index'%}" {% if active_page == "index" %} class="active" {% endif %}>Home</a>
+                <a href="{% url 'rate:overview'%}" {% if active_page == "overview" %} class="active" {% endif %}>Overview</a>
             </nav>
         </header>
         {% block content %}{% endblock content %}

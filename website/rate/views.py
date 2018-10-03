@@ -8,6 +8,7 @@ from .models import MincePie, Review
 def index(request):
     recent_mince_pie_list = MincePie.objects.order_by('-created_at')[:5]
     context = {
+        'active_page' : 'index',
         'recent_mince_pie_list' : recent_mince_pie_list
     }
     return render(request, 'rate/index.html', context)
@@ -15,6 +16,7 @@ def index(request):
 def overview(request):
     mince_pie_list = MincePie.objects.all()
     context = {
+        'active_page' : 'overview',
         'mince_pie_list' : mince_pie_list
     }
     return render(request, 'rate/overview.html', context)
