@@ -12,6 +12,13 @@ def index(request):
     }
     return render(request, 'rate/index.html', context)
 
+def overview(request):
+    mince_pie_list = MincePie.objects.all()
+    context = {
+        'mince_pie_list' : mince_pie_list
+    }
+    return render(request, 'rate/overview.html', context)
+
 def review(request, mince_pie_id):
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
     try:

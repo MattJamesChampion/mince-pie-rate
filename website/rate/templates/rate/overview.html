@@ -1,0 +1,14 @@
+{% extends "rate/base.html" %}
+
+{% block title %}
+    Mince Pie Overview
+{% endblock title %}
+
+{% block content %}
+    <h1>All Mince Pies</h1>
+    <ul>
+    {% for mince_pie in mince_pie_list %}
+        <li><a href="{% url 'rate:detail' mince_pie.id %}">{{mince_pie}}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
