@@ -50,6 +50,11 @@ body {
     margin-right: auto;
 }
 
+textarea {
+    box-sizing: border-box;
+    width: 100%;
+}
+
 @media screen and (max-width: 550px) {
     body {
         width: 95%;
