@@ -8,13 +8,11 @@
         <link rel="stylesheet" type="text/css" href="{% static 'rate/style.css' %}">
     </head>
     <body>
-        <header>
-            <h1>Mince Pie-Rate</h1>
-            <nav class="menu">
-                <ul>
-                    <li><a href="{% url 'rate:index'%}">Home</a></li>
-                    <li><a href="{% url 'rate:overview'%}">Overview</a></li>
-                </ul>
+        <header id="main-header">
+            <a href="{% url 'rate:index'%}" id="page-header">Mince Pie-Rate</a>
+            <nav id="page-navigation">
+                <a href="{% url 'rate:index'%}">Home</a>
+                <a href="{% url 'rate:overview'%}">Overview</a>
             </nav>
         </header>
         {% block content %}{% endblock content %}
