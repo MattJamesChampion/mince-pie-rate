@@ -21,6 +21,7 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     mince_pie = models.ForeignKey(MincePie, on_delete=models.CASCADE)
     rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
+    free_text_review = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return "{0}: {1}".format(str(self.mince_pie), self.rating)
