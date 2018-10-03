@@ -5,12 +5,15 @@
         <title>{% block title %}{% endblock title %}</title>
     </head>
     <body>
-        <nav class="menu">
-          <ul>
-            <li><a href="{% url 'rate:index'%}">Home</a></li>
-            <li><a href="{% url 'rate:overview'%}">Overview</a></li>
-          </ul>
-        </nav>
+        <header>
+            <h1>Mince Pie-Rate</h1>
+            <nav class="menu">
+                <ul>
+                    <li><a href="{% url 'rate:index'%}">Home</a></li>
+                    <li><a href="{% url 'rate:overview'%}">Overview</a></li>
+                </ul>
+            </nav>
+        </header>
         {% block content %}{% endblock content %}
     </body>
 </html>
