@@ -9,9 +9,5 @@
     <h2>
         Recently Added Mince Pies
     </h2>
-    <ul>
-    {% for mince_pie in recent_mince_pie_list %}
-        <li><a href="{% url 'rate:detail' mince_pie.id %}">{{mince_pie}}</a></li>
-    {% endfor %}
-    </ul>
+    {% include "rate/mince_pie_details.html" with mince_pie_list=recent_mince_pie_list %}
 {% endblock content %}

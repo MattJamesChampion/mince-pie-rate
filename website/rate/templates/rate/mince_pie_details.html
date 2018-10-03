@@ -1,0 +1,5 @@
+<ul>
+{% for mince_pie in mince_pie_list %}
+    <li><a href="{% url 'rate:detail' mince_pie.id %}">{{mince_pie}}</a></li>
+{% endfor %}
+</ul>

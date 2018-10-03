@@ -6,9 +6,5 @@
 
 {% block content %}
     <h1>All Mince Pies</h1>
-    <ul>
-    {% for mince_pie in mince_pie_list %}
-        <li><a href="{% url 'rate:detail' mince_pie.id %}">{{mince_pie}}</a></li>
-    {% endfor %}
-    </ul>
+    {% include "rate/mince_pie_details.html" with mince_pie_list=mince_pie_list %}
 {% endblock content %}
