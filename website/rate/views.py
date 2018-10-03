@@ -6,9 +6,9 @@ from .models import MincePie, Review
 
 
 def index(request):
-    mince_pie_list = MincePie.objects.all()
+    recent_mince_pie_list = MincePie.objects.order_by('-created_at')[:5]
     context = {
-        'mince_pie_list' : mince_pie_list
+        'recent_mince_pie_list' : recent_mince_pie_list
     }
     return render(request, 'rate/index.html', context)
 
