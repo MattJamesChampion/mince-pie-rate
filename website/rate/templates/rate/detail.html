@@ -16,7 +16,7 @@
                 <input type="number" name="numeric_rating" />
                 <br/>
                 <label for="free_text_review">Free Text Review:</label>
-                <input type="text" name="free_text_review" />
+                <textarea cols="50" rows="4" name="free_text_review"></textarea>
                 <br/>
                 {% if notification_message %}<p><strong>{{ notification_message }}</strong></p>{% endif %}
                 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -32,12 +32,14 @@
                     <th>Created By</th>
                     <th>Date Created</th>
                     <th>Rating</th>
+                    <th>Free Text Review</th>
                 </tr>
                 {% for review in mince_pie.review_set.all %}
                 <tr>
                     <td>{{review.created_by}}</td>
                     <td>{{review.created_at}}</td>
                     <td>{{review.rating}}</td>
+                    <td>{{review.free_text_review|linebreaks}}</td>
                 </tr>
                 {% endfor %}
             </table>
