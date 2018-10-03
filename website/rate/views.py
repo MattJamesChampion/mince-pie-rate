@@ -17,7 +17,7 @@ def review(request, mince_pie_id):
     try:
         numeric_rating = int(request.POST['numeric_rating'])
         free_text_review = (request.POST['free_text_review'])
-        review_instance = Review(mince_pie=mince_pie_instance, rating=numeric_rating, free_text_review=free_text_review)
+        review_instance = Review(mince_pie=mince_pie_instance, rating=numeric_rating, free_text_review=free_text_review, created_by=request.user)
         review_instance.save()
     except Exception:
         error_message = 'Error - Could not create the review'
