@@ -55,6 +55,19 @@ textarea {
     width: 100%;
 }
 
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 3px;
+}
+
 @media screen and (max-width: 550px) {
     body {
         width: 95%;
