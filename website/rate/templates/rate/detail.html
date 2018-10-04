@@ -8,7 +8,7 @@
     <h1>{{mince_pie}}</h1>
 
     <section>
-        <form action="{% url 'rate:review' mince_pie.pk %}" method="post">
+        <form action="{% url 'rate:submit_review' mince_pie.pk %}" method="post">
             <fieldset>
                 <legend>Review {{mince_pie}}</legend>
                 {% csrf_token %}

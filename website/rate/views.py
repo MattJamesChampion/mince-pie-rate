@@ -21,7 +21,7 @@ def overview(request):
     }
     return render(request, 'rate/overview.html', context)
 
-def review(request, mince_pie_id):
+def submit_review(request, mince_pie_id):
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
     try:
         numeric_rating = int(request.POST['numeric_rating'])
