@@ -26,7 +26,7 @@ from .local_settings import *
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG is set in local_settings
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS is set in local_settings
 
 
 # Application definition
