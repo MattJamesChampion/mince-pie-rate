@@ -90,6 +90,9 @@ th, td {
     body {
         width: 95%;
     }
+    #main-header {
+        border-bottom: 0px;
+    }
     #main-header a {
         float: none;
         display: block;
