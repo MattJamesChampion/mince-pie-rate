@@ -50,11 +50,11 @@ steps:
     #password: # Required when credentialsOption == Inputs
     rootDirectory: 'website'
     filePatterns: '**'
-    remoteDirectory: '/home/site/deployments/website/' 
+    remoteDirectory: 'home/site/wwwroot/' 
     #clean: false 
     #cleanContents: false # Required when clean == False
     #overwrite: true 
-    #preservePaths: false 
+    preservePaths: true 
     #trustSSL: false 
 
 #- script: |
