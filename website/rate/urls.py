@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -10,4 +11,6 @@ urlpatterns = [
     path('mince-pies/<int:mince_pie_id>/review/submit', views.submit_review, name='submit_review'),
     path('mince-pies/add/', views.add, name='add'),
     path('mince-pies/add/submit/', views.submit_add, name='submit_add'),
+    path('account/login/', auth_views.LoginView.as_view(extra_context={'active_page' : 'login',}), name='login'),
+    path('account/logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

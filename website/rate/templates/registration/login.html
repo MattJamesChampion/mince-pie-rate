@@ -1,0 +1,17 @@
+{% extends "rate/base.html" %}
+
+{% block title %}
+    Log in
+{% endblock title %}
+
+{% block content %}
+    <h1>Log in</h1>
+    <fieldset>
+      <legend>User credentials</legend>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+    </fieldset>
+{% endblock content %}

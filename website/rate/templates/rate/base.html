@@ -15,6 +15,11 @@
                 <a href="{% url 'rate:index'%}" {% if active_page == "index" %} class="active" {% endif %}>Home</a>
                 <a href="{% url 'rate:overview'%}" {% if active_page == "overview" %} class="active" {% endif %}>Overview</a>
                 <a href="{% url 'rate:add'%}" {% if active_page == "add" %} class="active" {% endif %}>Add</a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'rate:login'%}" {% if active_page == "login" %} class="active" {% endif %}>Log in</a>
+                {% else %}
+                    <a href="{% url 'rate:logout'%}">Log out</a>
+                {% endif %}
             </nav>
         </header>
         {% block content %}{% endblock content %}
