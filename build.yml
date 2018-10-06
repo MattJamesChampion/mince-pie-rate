@@ -50,7 +50,7 @@ steps:
     #password: # Required when credentialsOption == Inputs
     rootDirectory: 'website'
     filePatterns: '**'
-    remoteDirectory: 'home/site/wwwroot/' 
+    remoteDirectory: 'site/wwwroot/' 
     #clean: false 
     #cleanContents: false # Required when clean == False
     #overwrite: true 
