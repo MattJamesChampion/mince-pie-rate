@@ -38,7 +38,7 @@ def detail(request, mince_pie_id):
     mince_pie = get_object_or_404(MincePie, pk=mince_pie_id)
     return render(request, 'rate/detail.html', {'mince_pie': mince_pie})
 
-def add(request):
+def add_mince_pie(request):
     if request.method == 'POST':
         try:
             brand = request.POST['brand']
@@ -47,11 +47,11 @@ def add(request):
             mince_pie_instance.save()
         except Exception:
             error_message = 'Error - Could not create the mince pie'
-            return render(request, 'rate/add.html', {'error_message' : error_message})
+            return render(request, 'rate/add_mince_pie.html', {'error_message' : error_message})
         else:
             return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
     else:
         context = {
-            'active_page' : 'add',
+            'active_page' : 'add_mince_pie',
         }
-        return render(request, 'rate/add.html', context)
+        return render(request, 'rate/add_mince_pie.html', context)
