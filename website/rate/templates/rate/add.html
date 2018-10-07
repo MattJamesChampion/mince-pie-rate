@@ -9,7 +9,7 @@
 
     {% if user.is_authenticated %}
         <section>
-            <form action="{% url 'rate:submit_add'%}" method="post">
+            <form action="{% url 'rate:add'%}" method="post">
                 <fieldset>
                     <legend>Mince pie details</legend>
                     {% csrf_token %}
