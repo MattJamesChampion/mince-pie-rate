@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import MincePie, Review
+from .forms import MincePieForm, ReviewForm
 
 
 def index(request):
@@ -22,37 +23,38 @@ def overview(request):
     return render(request, 'rate/overview.html', context)
 
 def submit_review(request, mince_pie_id):
+    form = ReviewForm(request.POST)
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
-    try:
-        numeric_rating = int(request.POST['numeric_rating'])
-        free_text_review = (request.POST['free_text_review'])
-        review_instance = Review(mince_pie=mince_pie_instance, rating=numeric_rating, free_text_review=free_text_review, created_by=request.user)
+
+    if form.is_valid():
+        rating = form.cleaned_data['rating']
+        free_text_review = form.cleaned_data['free_text_review']
+        review_instance = Review(mince_pie=mince_pie_instance, rating=rating, free_text_review=free_text_review, created_by=request.user)
         review_instance.save()
-    except Exception:
-        error_message = 'Error - Could not create the review'
-        return render(request, 'rate/detail.html', {'mince_pie' : mince_pie_instance, 'error_message' : error_message})
-    else:
         return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
+    
+    return render(request, 'rate/detail.html', {'form' : form, 'mince_pie': mince_pie_instance})
 
 def detail(request, mince_pie_id):
+    form = ReviewForm()
     mince_pie = get_object_or_404(MincePie, pk=mince_pie_id)
-    return render(request, 'rate/detail.html', {'mince_pie': mince_pie})
+    return render(request, 'rate/detail.html', {'form' : form, 'mince_pie': mince_pie})
 
-def add(request):
-    context = {
-        'active_page' : 'add',
-    }
-    return render(request, 'rate/add.html', context)
+def add_mince_pie(request):
+    if request.method == 'POST':
+        form = MincePieForm(request.POST)
 
-def submit_add(request):
-    try:
-        brand = request.POST['brand']
-        name = request.POST['name']
-        mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
-        mince_pie_instance.save()
-    except Exception:
-        error_message = 'Error - Could not create the mince pie'
-        return render(request, 'rate/add.html', {'error_message' : error_message})
+        if form.is_valid():
+            brand = form.cleaned_data['brand']
+            name = form.cleaned_data['name']
+            mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
+            mince_pie_instance.save()
+            return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
     else:
-        return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
-        
+        form = MincePieForm()
+
+    context = {
+        'form' : form,
+        'active_page' : 'add_mince_pie',
+    }
+    return render(request, 'rate/add_mince_pie.html', context)
