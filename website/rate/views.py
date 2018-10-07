@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import MincePie, Review
+from .forms import MincePieForm
 
 
 def index(request):
@@ -40,18 +41,19 @@ def detail(request, mince_pie_id):
 
 def add_mince_pie(request):
     if request.method == 'POST':
-        try:
-            brand = request.POST['brand']
-            name = request.POST['name']
+        form = MincePieForm(request.POST)
+
+        if form.is_valid():
+            brand = form.cleaned_data['brand']
+            name = form.cleaned_data['name']
             mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
             mince_pie_instance.save()
-        except Exception:
-            error_message = 'Error - Could not create the mince pie'
-            return render(request, 'rate/add_mince_pie.html', {'error_message' : error_message})
-        else:
             return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
     else:
-        context = {
-            'active_page' : 'add_mince_pie',
-        }
-        return render(request, 'rate/add_mince_pie.html', context)
+        form = MincePieForm()
+
+    context = {
+        'form' : form,
+        'active_page' : 'add_mince_pie',
+    }
+    return render(request, 'rate/add_mince_pie.html', context)
