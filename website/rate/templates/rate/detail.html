@@ -13,16 +13,7 @@
                 <fieldset>
                     <legend>Review {{mince_pie}}</legend>
                     {% csrf_token %}
-                    <label for="numeric_rating">Numeric Rating</label>
-                    <br/>
-                    <input type="number" name="numeric_rating" />
-                    <br/>
-                    <label for="free_text_review">Free Text Review</label>
-                    <br/>
-                    <textarea cols="50" rows="4" name="free_text_review"></textarea>
-                    <br/>
-                    {% if notification_message %}<p><strong>{{ notification_message }}</strong></p>{% endif %}
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                    {{ form.as_p }}
                     <input type="submit" value="Submit review" />
                 </fieldset>
             {% else %}
