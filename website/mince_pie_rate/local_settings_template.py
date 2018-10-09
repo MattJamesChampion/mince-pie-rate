@@ -23,3 +23,5 @@ DATABASES = {
 LANGUAGE_CODE = ''
 
 TIME_ZONE = ''
+
+STATIC_ROOT = ''
