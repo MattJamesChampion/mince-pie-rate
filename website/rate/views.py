@@ -31,7 +31,7 @@ def submit_review(request, mince_pie_id):
         free_text_review = form.cleaned_data['free_text_review']
         review_instance = Review(mince_pie=mince_pie_instance, rating=rating, free_text_review=free_text_review, created_by=request.user)
         review_instance.save()
-        return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
+        return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     
     return render(request, 'rate/detail.html', {'form' : form, 'mince_pie': mince_pie_instance})
 
@@ -49,7 +49,7 @@ def add_mince_pie(request):
             name = form.cleaned_data['name']
             mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
             mince_pie_instance.save()
-            return HttpResponseRedirect(reverse('rate:detail', args=(mince_pie_instance.pk,)))
+            return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     else:
         form = MincePieForm()
 
