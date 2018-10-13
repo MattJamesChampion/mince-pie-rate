@@ -8,7 +8,7 @@
     <h1>{{mince_pie}}</h1>
 
     <section>
-        <form action="{% url 'rate:submit_review' mince_pie.pk %}" method="post">
+        <form action="{% url 'submit_review' mince_pie.pk %}" method="post">
             {% if user.is_authenticated %}
                 <fieldset>
                     <legend>Review {{mince_pie}}</legend>
@@ -17,7 +17,7 @@
                     <input type="submit" value="Submit review" />
                 </fieldset>
             {% else %}
-                <p>Please <a href="{% url 'rate:login' %}">log in</a> to review this mince pie!</p>
+                <p>Please <a href="{% url 'login' %}">log in</a> to review this mince pie!</p>
             {% endif %}
         </form>
     </section>

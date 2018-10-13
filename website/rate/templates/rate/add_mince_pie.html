@@ -9,7 +9,7 @@
 
     {% if user.is_authenticated %}
         <section>
-            <form action="{% url 'rate:add_mince_pie'%}" method="post">
+            <form action="{% url 'add_mince_pie'%}" method="post">
                 <fieldset>
                     <legend>Mince pie details</legend>
                     {% csrf_token %}
@@ -19,6 +19,6 @@
             </form>
         </section>
     {% else %}
-        <p>Please <a href="{% url 'rate:login' %}">log in</a> to create a new mince pie!</p>
+        <p>Please <a href="{% url 'login' %}">log in</a> to create a new mince pie!</p>
     {% endif %}
 {% endblock content %}

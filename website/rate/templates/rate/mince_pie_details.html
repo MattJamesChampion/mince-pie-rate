@@ -1,6 +1,6 @@
 <section class="mince_pie_cards">
 {% for mince_pie in mince_pie_list %}
-    <a href="{% url 'rate:detail' mince_pie.id %}" class="mince_pie_card">
+    <a href="{% url 'detail' mince_pie.id %}" class="mince_pie_card">
         {{mince_pie}}
     </a>
 {% endfor %}
