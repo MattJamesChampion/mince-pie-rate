@@ -42,6 +42,7 @@ steps:
 #    replaceExistingArchive: true 
 
 - task: FtpUpload@1
+  displayName: 'FTP Deploy the main website'
   inputs:
     credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
     serverEndpoint: 'Mince-Pie-Rate FTPS' # Required when credentialsOption == ServiceEndpoint
@@ -58,19 +59,29 @@ steps:
     #trustSSL: false 
 
 - task: DotNetCoreCLI@2
+  displayName: 'Restore function app nuget packages'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
 
+- task: DotNetCoreCLI@2
+  displayName: 'Build the function app'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
+    arguments: '--configuration release --output $(build.artifactStagingDirectory)'
+
 - task: FtpUpload@1
+  displayName: 'Deploy the function app'
   inputs:
     credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
     serverEndpoint: 'Mince-Pie-Rate-Vision FTPS' # Required when credentialsOption == ServiceEndpoint
     #serverUrl: # Required when credentialsOption == Inputs
     #username: # Required when credentialsOption == Inputs
     #password: # Required when credentialsOption == Inputs
-    rootDirectory: 'vision-func-app'
+    rootDirectory: '$(build.artifactStagingDirectory)'
     filePatterns: '**'
     remoteDirectory: 'site/wwwroot/' 
     #clean: false 
