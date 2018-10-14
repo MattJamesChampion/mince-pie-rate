@@ -16,7 +16,7 @@ namespace mincepierate.Vision
 {
     public static class ReadPieBoxDetails
     {
-        private const string subscriptionKey = "";
+        private static readonly string subscriptionKey = Startup.Configuration["visionSubscriptionKey"];
         private const int numberOfCharsInOperationId = 36;
 
         [FunctionName("ReadPieBoxDetails")]
@@ -26,15 +26,12 @@ namespace mincepierate.Vision
             ComputerVisionClient computerVision = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
                 new System.Net.Http.DelegatingHandler[] { });
-                
+
             var imageUrl = req.Query["imageUrl"];
             var textHeaders = await computerVision.RecognizeTextAsync(
                     imageUrl, TextRecognitionMode.Printed);
-            
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //dynamic data = JsonConvert.DeserializeObject(requestBody);
-            
-            return (ActionResult)new OkObjectResult(GetTextAsync(computerVision,textHeaders.OperationLocation));
+
+            return (ActionResult)new OkObjectResult(GetTextAsync(computerVision, textHeaders.OperationLocation));
         }
 
         private static async Task<string> GetTextAsync(
@@ -45,7 +42,7 @@ namespace mincepierate.Vision
             string operationId = operationLocation.Substring(
                 operationLocation.Length - numberOfCharsInOperationId);
 
-            Console.WriteLine("\nCalling GetHandwritingRecognitionOperationResultAsync()");
+            Console.WriteLine("\nCalling GetTextRecognitionOperationResultAsync()");
             TextOperationResult result =
                 await computerVision.GetTextOperationResultAsync(operationId);
 
