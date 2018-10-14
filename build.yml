@@ -41,7 +41,7 @@ steps:
 #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
 #    replaceExistingArchive: true 
 
-- task: websiteDeployment
+- task: websiteDeployment@0
   inputs:
     credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
     serverEndpoint: 'Mince-Pie-Rate FTPS' # Required when credentialsOption == ServiceEndpoint
@@ -57,13 +57,13 @@ steps:
     preservePaths: true 
     #trustSSL: false 
 
-- task: buildFuncApp
+- task: buildFuncApp@0
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
 
-- task: visionFunctionAppDeployment
+- task: visionFunctionAppDeployment@0
   inputs:
     credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
     serverEndpoint: 'Mince-Pie-Rate-Vision FTPS' # Required when credentialsOption == ServiceEndpoint
