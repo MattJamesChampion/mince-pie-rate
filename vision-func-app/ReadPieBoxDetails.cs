@@ -25,7 +25,7 @@ namespace mincepierate.Vision
             log.LogInformation("C# HTTP trigger function processed a request.");
             ComputerVisionClient computerVision = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
-                new System.Net.Http.DelegatingHandler[] { });
+                new System.Net.Http.DelegatingHandler[] { }) {Endpoint="westeurope.api.cognitive.microsoft.com"};
 
             var imageUrl = req.Query["imageUrl"];
             var textHeaders = await computerVision.RecognizeTextAsync(
