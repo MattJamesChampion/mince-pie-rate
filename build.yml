@@ -41,7 +41,7 @@ steps:
 #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
 #    replaceExistingArchive: true 
 
-- task: FtpUpload@1
+- task: websiteDeployment
   inputs:
     credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
     serverEndpoint: 'Mince-Pie-Rate FTPS' # Required when credentialsOption == ServiceEndpoint
@@ -49,6 +49,28 @@ steps:
     #username: # Required when credentialsOption == Inputs
     #password: # Required when credentialsOption == Inputs
     rootDirectory: 'website'
+    filePatterns: '**'
+    remoteDirectory: 'site/wwwroot/' 
+    #clean: false 
+    #cleanContents: false # Required when clean == False
+    #overwrite: true 
+    preservePaths: true 
+    #trustSSL: false 
+
+- task: buildFuncApp
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
+
+- task: visionFunctionAppDeployment
+  inputs:
+    credentialsOption: 'serviceEndpoint' # Options: serviceEndpoint, inputs
+    serverEndpoint: 'Mince-Pie-Rate-Vision FTPS' # Required when credentialsOption == ServiceEndpoint
+    #serverUrl: # Required when credentialsOption == Inputs
+    #username: # Required when credentialsOption == Inputs
+    #password: # Required when credentialsOption == Inputs
+    rootDirectory: 'vision-func-app'
     filePatterns: '**'
     remoteDirectory: 'site/wwwroot/' 
     #clean: false 
