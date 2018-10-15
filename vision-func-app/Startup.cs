@@ -2,7 +2,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 
-namespace mincepierate.Vision
+namespace MincePieRate.Vision
 {
     public class Startup
     {
