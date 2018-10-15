@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -12,7 +13,7 @@ using Newtonsoft.Json;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 
-namespace mincepierate.Vision
+namespace MincePieRate.Vision
 {
     public static class ReadPieBoxDetails
     {
@@ -25,17 +26,18 @@ namespace mincepierate.Vision
             log.LogInformation("C# HTTP trigger function processed a request.");
             ComputerVisionClient computerVision = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
-                new System.Net.Http.DelegatingHandler[] { }) {Endpoint="westeurope.api.cognitive.microsoft.com"};
+                new System.Net.Http.DelegatingHandler[] { }) {Endpoint="https://westeurope.api.cognitive.microsoft.com"};
 
             var imageUrl = req.Query["imageUrl"];
+            log.LogInformation("url: '" +imageUrl+"'");
             var textHeaders = await computerVision.RecognizeTextAsync(
                     imageUrl, TextRecognitionMode.Printed);
 
-            return (ActionResult)new OkObjectResult(GetTextAsync(computerVision, textHeaders.OperationLocation));
+            return (ActionResult)new OkObjectResult(await GetTextAsync(computerVision, textHeaders.OperationLocation,log));
         }
 
         private static async Task<string> GetTextAsync(
-            ComputerVisionClient computerVision, string operationLocation)
+            ComputerVisionClient computerVision, string operationLocation, ILogger log)
         {
             // Retrieve the URI where the recognized text will be
             // stored from the Operation-Location header
@@ -48,7 +50,7 @@ namespace mincepierate.Vision
 
             // Wait for the operation to complete
             int i = 0;
-            int maxRetries = 10;
+            int maxRetries = 60;
             while ((result.Status == TextOperationStatusCodes.Running ||
                     result.Status == TextOperationStatusCodes.NotStarted) && i++ < maxRetries)
             {
@@ -57,9 +59,19 @@ namespace mincepierate.Vision
                 await Task.Delay(1000);
 
                 result = await computerVision.GetTextOperationResultAsync(operationId);
+            }//TODO make the method of waiting less rubbish, maybe use durable function?
+
+            if(result.RecognitionResult == null) {
+                log.LogError("Failed to OCR text from image. Max try count exceeded.");
+                return null;
             }
 
-            return string.Join(Environment.NewLine, result.RecognitionResult.Lines);
+            if(result.Status == TextOperationStatusCodes.Failed) {
+                log.LogError("Failed to OCR text from image.");
+                return null;
+            }
+
+            return string.Join(Environment.NewLine, result.RecognitionResult.Lines.Select(l => l.Text));
         }
     }
 }
