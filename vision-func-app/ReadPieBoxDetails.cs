@@ -61,7 +61,7 @@ namespace MincePieRate.Vision
                 result = await computerVision.GetTextOperationResultAsync(operationId);
             }//TODO make the method of waiting less rubbish, maybe use durable function?
 
-            if(result.RecognitionResult == null) {
+            if(result.RecognitionResult == null && result.Status != TextOperationStatusCodes.Failed) {
                 log.LogError("Failed to OCR text from image. Max try count exceeded.");
                 return null;
             }
