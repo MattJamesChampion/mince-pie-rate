@@ -83,7 +83,7 @@ th, td {
     color: black;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 860px) {
     body {
         width: 95%;
     }
