@@ -23,7 +23,7 @@ class Review(models.Model):
     aroma_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
     value_for_money_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
 
-    free_text_review = models.TextField(max_length=50, blank=True)
+    free_text_review = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return "{0}: {1}".format(str(self.mince_pie), self.rating)
