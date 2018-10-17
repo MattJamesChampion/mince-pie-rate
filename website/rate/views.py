@@ -27,9 +27,20 @@ def submit_review(request, mince_pie_id):
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
 
     if form.is_valid():
-        rating = form.cleaned_data['rating']
+        pastry_rating = form.cleaned_data['pastry_rating']
+        filling_rating = form.cleaned_data['filling_rating']
+        appearance_rating = form.cleaned_data['appearance_rating']
+        aroma_rating = form.cleaned_data['aroma_rating']
+        value_for_money_rating = form.cleaned_data['value_for_money_rating']
         free_text_review = form.cleaned_data['free_text_review']
-        review_instance = Review(mince_pie=mince_pie_instance, rating=rating, free_text_review=free_text_review, created_by=request.user)
+        review_instance = Review(mince_pie=mince_pie_instance,
+                                 pastry_rating=pastry_rating,
+                                 filling_rating=filling_rating,
+                                 appearance_rating=appearance_rating,
+                                 aroma_rating=aroma_rating,
+                                 value_for_money_rating=value_for_money_rating,
+                                 free_text_review=free_text_review,
+                                 created_by=request.user)
         review_instance.save()
         return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     

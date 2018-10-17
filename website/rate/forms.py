@@ -9,4 +9,4 @@ class MincePieForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = models.Review
-        fields = ['rating', 'free_text_review']
+        fields = ['pastry_rating', 'filling_rating', 'appearance_rating', 'aroma_rating', 'value_for_money_rating', 'free_text_review']

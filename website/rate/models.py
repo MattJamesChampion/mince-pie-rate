@@ -16,7 +16,13 @@ class Review(models.Model):
     created_by = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL, related_name='review_created_by')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     mince_pie = models.ForeignKey(MincePie, on_delete=models.CASCADE)
-    rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
+
+    pastry_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    filling_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    appearance_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    aroma_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    value_for_money_rating = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(10)])
+
     free_text_review = models.TextField(max_length=50, blank=True)
 
     def __str__(self):
