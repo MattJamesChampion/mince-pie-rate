@@ -70,17 +70,23 @@ th, td {
     border: 1px black solid;
     padding: 5px;
     margin: 3px;
-    width: 30%;
+    width: 250px;
     text-align: center;
     text-decoration: none;
     color: black;
     border-radius: 5px;
     font-weight: 600;
+    box-shadow: 2px 2px rgb(50, 50, 50);
 }
 
 .mince_pie_card:hover {
     background-color: rgb(200, 200, 200);
     color: black;
+}
+
+.mince_pie_card .mince_pie_image {
+    width: 100%;
+    box-shadow: 2px 2px rgb(25, 25, 25);
 }
 
 @media screen and (max-width: 860px) {
