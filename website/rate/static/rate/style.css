@@ -86,6 +86,7 @@ th, td {
 
 .mince_pie_card .mince_pie_image {
     width: 100%;
+    height: auto;
     box-shadow: 2px 2px rgb(25, 25, 25);
 }
 

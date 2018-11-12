@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.core.files.storage import FileSystemStorage
 
 from .models import MincePie, Review
 from .forms import MincePieForm, ReviewForm
@@ -53,12 +54,15 @@ def detail(request, mince_pie_id):
 
 def add_mince_pie(request):
     if request.method == 'POST':
-        form = MincePieForm(request.POST)
+        form = MincePieForm(request.POST, files=request.FILES)
 
         if form.is_valid():
             brand = form.cleaned_data['brand']
             name = form.cleaned_data['name']
-            mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
+            box_image = form.cleaned_data['box_image']
+            mince_pie_image = form.cleaned_data['mince_pie_image']
+
+            mince_pie_instance = MincePie(brand=brand, name=name, box_image=box_image, mince_pie_image=mince_pie_image, created_by=request.user)
             mince_pie_instance.save()
             return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     else:
