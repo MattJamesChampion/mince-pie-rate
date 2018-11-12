@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 
 from .models import MincePie, Review
 from .forms import MincePieForm, ReviewForm
@@ -23,6 +24,7 @@ def overview(request):
     }
     return render(request, 'rate/overview.html', context)
 
+@login_required
 def submit_review(request, mince_pie_id):
     form = ReviewForm(request.POST)
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
@@ -52,6 +54,7 @@ def detail(request, mince_pie_id):
     mince_pie = get_object_or_404(MincePie, pk=mince_pie_id)
     return render(request, 'rate/detail.html', {'form' : form, 'mince_pie': mince_pie})
 
+@login_required
 def add_mince_pie(request):
     if request.method == 'POST':
         form = MincePieForm(request.POST, files=request.FILES)
