@@ -28,14 +28,14 @@
                 <tr>
                     <th>Created By</th>
                     <th>Date Created</th>
-                    <th>Rating</th>
+                    <th>Average Rating</th>
                     <th>Free Text Review</th>
                 </tr>
                 {% for review in mince_pie.review_set.all %}
                 <tr>
                     <td>{{review.created_by}}</td>
-                    <td>{{review.created_at}}</td>
-                    <td>{{review.rating}}</td>
+                    <td>{{review.created_at|date:"d/m/y"}}</td>
+                    <td>{{review.rating_mean}}</td>
                     <td>{{review.free_text_review|linebreaks}}</td>
                 </tr>
                 {% endfor %}

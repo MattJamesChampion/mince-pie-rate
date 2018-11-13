@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 
 from .models import MincePie, Review
 from .forms import MincePieForm, ReviewForm
@@ -22,14 +24,26 @@ def overview(request):
     }
     return render(request, 'rate/overview.html', context)
 
+@login_required
 def submit_review(request, mince_pie_id):
     form = ReviewForm(request.POST)
     mince_pie_instance = get_object_or_404(MincePie, pk=mince_pie_id)
 
     if form.is_valid():
-        rating = form.cleaned_data['rating']
+        pastry_rating = form.cleaned_data['pastry_rating']
+        filling_rating = form.cleaned_data['filling_rating']
+        appearance_rating = form.cleaned_data['appearance_rating']
+        aroma_rating = form.cleaned_data['aroma_rating']
+        value_for_money_rating = form.cleaned_data['value_for_money_rating']
         free_text_review = form.cleaned_data['free_text_review']
-        review_instance = Review(mince_pie=mince_pie_instance, rating=rating, free_text_review=free_text_review, created_by=request.user)
+        review_instance = Review(mince_pie=mince_pie_instance,
+                                 pastry_rating=pastry_rating,
+                                 filling_rating=filling_rating,
+                                 appearance_rating=appearance_rating,
+                                 aroma_rating=aroma_rating,
+                                 value_for_money_rating=value_for_money_rating,
+                                 free_text_review=free_text_review,
+                                 created_by=request.user)
         review_instance.save()
         return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     
@@ -40,14 +54,18 @@ def detail(request, mince_pie_id):
     mince_pie = get_object_or_404(MincePie, pk=mince_pie_id)
     return render(request, 'rate/detail.html', {'form' : form, 'mince_pie': mince_pie})
 
+@login_required
 def add_mince_pie(request):
     if request.method == 'POST':
-        form = MincePieForm(request.POST)
+        form = MincePieForm(request.POST, files=request.FILES)
 
         if form.is_valid():
             brand = form.cleaned_data['brand']
             name = form.cleaned_data['name']
-            mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
+            box_image = form.cleaned_data['box_image']
+            mince_pie_image = form.cleaned_data['mince_pie_image']
+
+            mince_pie_instance = MincePie(brand=brand, name=name, box_image=box_image, mince_pie_image=mince_pie_image, created_by=request.user)
             mince_pie_instance.save()
             return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     else:
