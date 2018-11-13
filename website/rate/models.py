@@ -46,4 +46,4 @@ class Review(models.Model):
         return self.rating_total / number_of_rating_fields
 
     def __str__(self):
-        return "{0} : {1} : {2}".format(self.created_by, str(self.mince_pie), self.rating_total)
+        return "{0} : {1} : {2}".format(self.created_by, str(self.mince_pie), self.rating_mean)
