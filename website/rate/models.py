@@ -36,5 +36,14 @@ class Review(models.Model):
 
     free_text_review = models.TextField(max_length=1000, blank=True)
 
+    @property
+    def rating_total(self):
+        return self.pastry_rating + self.filling_rating + self.appearance_rating + self.aroma_rating + self.value_for_money_rating
+
+    @property
+    def rating_mean(self):
+        number_of_rating_fields = 5
+        return self.rating_total / number_of_rating_fields
+
     def __str__(self):
         return "{0}: {1}".format(str(self.mince_pie), self.rating)
