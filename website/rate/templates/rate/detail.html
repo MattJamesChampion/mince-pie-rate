@@ -8,22 +8,17 @@
     <h1>{{mince_pie}}</h1>
 
     <section>
-        <form action="{% url 'rate:submit_review' mince_pie.pk %}" method="post">
-            <fieldset>
-                <legend>Review {{mince_pie}}</legend>
-                {% csrf_token %}
-                <label for="numeric_rating">Numeric Rating</label>
-                <br/>
-                <input type="number" name="numeric_rating" />
-                <br/>
-                <label for="free_text_review">Free Text Review</label>
-                <br/>
-                <textarea cols="50" rows="4" name="free_text_review"></textarea>
-                <br/>
-                {% if notification_message %}<p><strong>{{ notification_message }}</strong></p>{% endif %}
-                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                <input type="submit" value="Submit review" />
-            </fieldset>
+        <form action="{% url 'submit_review' mince_pie.pk %}" method="post">
+            {% if user.is_authenticated %}
+                <fieldset>
+                    <legend>Review {{mince_pie}}</legend>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit review" />
+                </fieldset>
+            {% else %}
+                <p>Please <a href="{% url 'account_login' %}">log in</a> to review this mince pie!</p>
+            {% endif %}
         </form>
     </section>
     <section>
@@ -33,14 +28,14 @@
                 <tr>
                     <th>Created By</th>
                     <th>Date Created</th>
-                    <th>Rating</th>
+                    <th>Average Rating</th>
                     <th>Free Text Review</th>
                 </tr>
                 {% for review in mince_pie.review_set.all %}
                 <tr>
                     <td>{{review.created_by}}</td>
-                    <td>{{review.created_at}}</td>
-                    <td>{{review.rating}}</td>
+                    <td>{{review.created_at|date:"d/m/y"}}</td>
+                    <td>{{review.rating_mean}}</td>
                     <td>{{review.free_text_review|linebreaks}}</td>
                 </tr>
                 {% endfor %}

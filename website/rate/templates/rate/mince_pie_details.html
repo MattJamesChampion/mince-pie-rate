@@ -1,7 +1,23 @@
+{% load static %}
 <section class="mince_pie_cards">
-{% for mince_pie in mince_pie_list %}
-    <a href="{% url 'rate:detail' mince_pie.id %}" class="mince_pie_card">
-        {{mince_pie}}
-    </a>
-{% endfor %}
+{% if mince_pie_list.all %}
+    {% for mince_pie in mince_pie_list %}
+        <a href="{% url 'detail' mince_pie.id %}" class="mince_pie_card">
+                <img class="mince_pie_image" src="
+                {% if mince_pie.mince_pie_image and mince_pie.mince_pie_image.strip != "" %}
+                    {{MEDIA_URL}}{{mince_pie.mince_pie_image}}
+                {% elif mince_pie.box_image and mince_pie.box_image.strip != "" %}
+                    {{MEDIA_URL}}{{mince_pie.box_image}}
+                {% else %}
+                    {% static 'rate/mince_pie_placeholder.png' %}
+            {% endif %}
+            "/>
+            {{mince_pie.brand}}
+            <br />
+            {{mince_pie.name}}
+        </a>
+    {% endfor %}
+    {% else %}
+    <p>No mince pies added yet!</p>
+{% endif %}
 </section>
