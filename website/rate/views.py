@@ -63,9 +63,14 @@ def add_mince_pie(request):
             brand = form.cleaned_data['brand']
             name = form.cleaned_data['name']
             box_image = form.cleaned_data['box_image']
+            box_back_image = form.cleaned_data['box_back_image']
             mince_pie_image = form.cleaned_data['mince_pie_image']
 
-            mince_pie_instance = MincePie(brand=brand, name=name, box_image=box_image, mince_pie_image=mince_pie_image, created_by=request.user)
+            mince_pie_instance = MincePie(brand=brand, name=name, created_by=request.user)
+            mince_pie_instance.save()
+            mince_pie_instance.box_image=box_image
+            mince_pie_instance.box_back_image=box_back_image
+            mince_pie_instance.mince_pie_image=mince_pie_image
             mince_pie_instance.save()
             return HttpResponseRedirect(reverse('detail', args=(mince_pie_instance.pk,)))
     else:

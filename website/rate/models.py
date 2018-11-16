@@ -6,11 +6,15 @@ from urllib.parse import quote_plus
 
 def box_image_path(instance, filename):
     base_file_name, file_extension = splitext(filename)
-    return join(quote_plus(instance.brand), quote_plus(instance.name), "box_image" + file_extension.lower())
+    return join("box_image", str(instance.pk) + file_extension.lower())
+
+def box_back_image_path(instance, filename):
+    base_file_name, file_extension = splitext(filename)
+    return join("box_back_image", str(instance.pk) + file_extension.lower())
 
 def mince_pie_image_path(instance, filename):
     base_file_name, file_extension = splitext(filename)
-    return join(quote_plus(instance.brand), quote_plus(instance.name), "mince_pie_image" + file_extension.lower())
+    return join("mince_pie_image", str(instance.pk) + file_extension.lower())
 
 class MincePie(models.Model):
     created_by = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL, related_name='mince_pie_created_by')
@@ -18,6 +22,8 @@ class MincePie(models.Model):
     brand = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     box_image = models.FileField(upload_to=box_image_path, blank=True)
+    box_back_image = models.FileField(upload_to=box_back_image_path, blank=True)
+    box_back_text = models.TextField(max_length=1000, blank=True)
     mince_pie_image = models.FileField(upload_to=mince_pie_image_path, blank=True)
 
     def __str__(self):
