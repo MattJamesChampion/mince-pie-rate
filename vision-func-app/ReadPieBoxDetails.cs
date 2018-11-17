@@ -31,7 +31,20 @@ namespace MincePieRate.Vision
             try
             {
                 log.LogInformation("C# EventGrid Trigger function processed a request.");
-                if (string.Equals(eventGridEvent.EventType, "Microsoft.Storage.BlobCreated", StringComparison.OrdinalIgnoreCase))
+
+                if (eventGridEvent.Data is SubscriptionValidationEventData)
+                {
+                    var eventData = (SubscriptionValidationEventData)eventGridEvent.Data;
+                    log.LogInformation($"Got SubscriptionValidation event data, validationCode: {eventData.ValidationCode},  validationUrl: {eventData.ValidationUrl}, topic: {eventGridEvent.Topic}");
+                    // Do any additional validation (as required) such as validating that the Azure resource ID of the topic matches
+                    // the expected topic and then return back the below response
+                    var responseData = new Microsoft.Azure.EventGrid.Models.SubscriptionValidationResponse()
+                    {
+                        ValidationResponse = eventData.ValidationCode
+                    };
+
+                    return new OkObjectResult(responseData);
+                } else if (string.Equals(eventGridEvent.EventType, "Microsoft.Storage.BlobCreated", StringComparison.OrdinalIgnoreCase))
                 {
                     log.LogInformation("C# EventGrid Trigger function processed a blob created request.");
                     var blobCreatedEvent = (StorageBlobCreatedEventData)eventGridEvent.Data;
