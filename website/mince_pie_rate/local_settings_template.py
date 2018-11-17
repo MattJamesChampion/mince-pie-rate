@@ -27,3 +27,9 @@ TIME_ZONE = ''
 STATIC_ROOT = ''
 
 EMAIL_BACKEND = ''
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+AZURE_ACCOUNT_NAME = ""
+AZURE_ACCOUNT_KEY = ""
+AZURE_CONTAINER = "images"
+MEDIA_URL = "https://mincepieratedev.blob.core.windows.net/images/"
